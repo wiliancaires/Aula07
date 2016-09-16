@@ -45,6 +45,25 @@ public class UC01CadastrarEmpresa {
 		assertEquals(1, empresaDAO.adiciona(empresa));
 	}
 
+	/**
+	 * obj - verificar o comportamento do sistema na inclusão de uma empresa com
+	 * o cnpj ja cadastrado.
+	 */
+	@Test(expected = RuntimeException.class)
+	public void CT02UC01FBCadastrarEmpresa_com_cnpj_ja_cadastrado() {
+		empresaDAO.adiciona(empresa);
+		empresaDAO.adiciona(empresa);
+	}
+
+	/**
+	 * obj - verificar o comportamento do sistema na exclusão de uma empresa com
+	 * cnpj não cadastrado.
+	 */
+	@Test
+	public void CT03UC01FBExcluirEmpresa_com_cnpj_invalido() {
+		assertEquals(0, empresaDAO.exclui("89424232000180"));
+	}
+
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
