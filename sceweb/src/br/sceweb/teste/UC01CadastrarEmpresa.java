@@ -2,6 +2,7 @@ package br.sceweb.teste;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Before;
@@ -31,6 +32,7 @@ public class UC01CadastrarEmpresa {
 	 * 
 	 * @throws Exception
 	 */
+
 	@Before
 	public void excluiEmpresa() throws Exception {
 		empresaDAO.exclui("89424232000180");
@@ -40,6 +42,7 @@ public class UC01CadastrarEmpresa {
 	 * obj - verificar o comportamento do sistema na inclusão de uma empresa com
 	 * sucesso.
 	 */
+
 	@Test
 	public void CT01UC01FBCadastrarEmpresa_com_sucesso() {
 		assertEquals(1, empresaDAO.adiciona(empresa));
@@ -49,23 +52,27 @@ public class UC01CadastrarEmpresa {
 	 * obj - verificar o comportamento do sistema na inclusão de uma empresa com
 	 * o cnpj ja cadastrado.
 	 */
+
 	@Test(expected = RuntimeException.class)
 	public void CT02UC01FBCadastrarEmpresa_com_cnpj_ja_cadastrado() {
 		empresaDAO.adiciona(empresa);
 		empresaDAO.adiciona(empresa);
+		// assertEquals(0, empresaDAO.adiciona(empresa));
 	}
 
 	/**
 	 * obj - verificar o comportamento do sistema na exclusão de uma empresa com
 	 * cnpj não cadastrado.
 	 */
-	@Test
+
+	@Test // (expected = RuntimeException.class)
 	public void CT03UC01FBExcluirEmpresa_com_cnpj_invalido() {
 		assertEquals(0, empresaDAO.exclui("89424232000180"));
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		empresaDAO.exclui("89424232000180");
 	}
 
 }
